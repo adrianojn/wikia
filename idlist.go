@@ -16,10 +16,12 @@
 package main
 
 import (
+	"bytes"
 	"database/sql"
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -35,25 +37,17 @@ var (
 	jsonFile = flag.String("json", "result.json", "name of output file")
 )
 
-type result struct {
-	Query struct {
-		Redirects []struct {
-			From string
-			To   string
-		}
-		Pages map[string]struct {
-			Title     string
-			Revisions []struct {
-				Text string `json:"*"`
-			}
-		}
+var resultJSON map[string]struct {
+	Title     string
+	Revisions []struct {
+		Text string `json:"*"`
 	}
 }
 
-var resultJSON = &result{}
-
 func main() {
 	flag.Parse()
+
+	// load
 
 	db, err := sql.Open("sqlite3", *dbName)
 	catch(err)
@@ -71,13 +65,29 @@ func main() {
 	}
 	catch(rows.Err())
 
-	parseJSON(ids[:10])
+	// parse
+
+	const step = 50
+	var size = len(ids)
+	for i := 0; i < size; i += step {
+		fmt.Println(i, "of", size)
+		if i+step > size {
+			parseJSON(ids[i:])
+		} else {
+			parseJSON(ids[i : i+step])
+		}
+	}
+
+	// save
 
 	out, err := os.Create(*jsonFile)
 	catch(err)
 	defer out.Close()
 
-	catch(json.NewEncoder(out).Encode(resultJSON))
+	data, err := json.MarshalIndent(&resultJSON, "", " ")
+	catch(err)
+
+	io.Copy(out, bytes.NewReader(data))
 }
 
 func parseJSON(ids []string) {
@@ -96,7 +106,13 @@ func parseJSON(ids []string) {
 	}
 	defer resp.Body.Close()
 
-	err = json.NewDecoder(resp.Body).Decode(resultJSON)
+	var rawData struct {
+		Query struct{ Pages json.RawMessage }
+	}
+	err = json.NewDecoder(resp.Body).Decode(&rawData)
+	catch(err)
+
+	err = json.Unmarshal(rawData.Query.Pages, &resultJSON)
 	catch(err)
 }
 

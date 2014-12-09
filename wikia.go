@@ -37,12 +37,16 @@ var (
 	jsonFile = flag.String("json", "result.json", "name of output file")
 )
 
-var resultJSON map[string]struct {
+type WikiaResult map[string]struct {
 	Title     string
 	Revisions []struct {
 		Text string `json:"*"`
 	}
 }
+
+var resultJSON = make(WikiaResult)
+
+var missedCards []string
 
 func main() {
 	flag.Parse()
@@ -53,28 +57,53 @@ func main() {
 	catch(err)
 	defer db.Close()
 
-	rows, err := db.Query("select id from datas")
+	rows, err := db.Query("select id, name from texts")
 	catch(err)
 
 	ids := make([]string, 0, 10000)
+	cardMap := make(map[string]string)
+
 	for rows.Next() {
-		var id string
-		err := rows.Scan(&id)
+		var id, name string
+		err := rows.Scan(&id, &name)
 		catch(err)
-		ids = append(ids, fmt.Sprintf("%08s", id))
+
+		id = fmt.Sprintf("%08s", id)
+		ids = append(ids, id)
+		cardMap[id] = name
 	}
 	catch(rows.Err())
+	defer rows.Close()
 
-	// parse
+	// download and parse
 
 	const step = 50
 	var size = len(ids)
+
 	for i := 0; i < size; i += step {
 		fmt.Println(i, "of", size)
 		if i+step > size {
 			parseJSON(ids[i:])
 		} else {
 			parseJSON(ids[i : i+step])
+		}
+	}
+
+	// repeat for missed cards using card name
+
+	size = len(missedCards)
+	missed := make([]string, 0, size)
+
+	for _, c := range missedCards {
+		missed = append(missed, cardMap[c])
+	}
+
+	for i := 0; i < size; i += step {
+		fmt.Println("retrying", i, "of", size)
+		if i+step > size {
+			parseJSON(missed[i:])
+		} else {
+			parseJSON(missed[i : i+step])
 		}
 	}
 
@@ -112,8 +141,17 @@ func parseJSON(ids []string) {
 	err = json.NewDecoder(resp.Body).Decode(&rawData)
 	catch(err)
 
-	err = json.Unmarshal(rawData.Query.Pages, &resultJSON)
+	var cards WikiaResult
+	err = json.Unmarshal(rawData.Query.Pages, &cards)
 	catch(err)
+
+	for id, c := range cards {
+		if c.Revisions == nil {
+			missedCards = append(missedCards, c.Title)
+		} else {
+			resultJSON[id] = c
+		}
+	}
 }
 
 func catch(err error) {

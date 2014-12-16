@@ -1,0 +1,18 @@
+{
+	"en": {
+		"categories":["Category:TCG cards","Category:OCG cards"],
+		"cdb": "cards-en.cdb",
+		"db": "cards-en.json",
+		"number": "|number = ",
+		"pendulum":"|pendulum_effect = ",
+		"text": "|lore = "
+	},
+	"es": {
+		"categories":["Categoría:Carta"],
+		"cdb": "cards-es.cdb",
+		"db": "cards-es.json",
+		"number": "|código=",
+		"pendulum": "",
+		"text": "|descripción="
+	}
+}

@@ -17,7 +17,6 @@ package main
 
 import (
 	"bytes"
-	"database/sql"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -26,15 +25,18 @@ import (
 	"net/url"
 	"os"
 	"strings"
-
-	_ "github.com/mattn/go-sqlite3"
 )
 
 const wikiaAPI = "http://yugioh.wikia.com/api.php"
 
+var categories = []string{
+	"Category:OCG cards",
+	"Category:TCG cards",
+}
+
 var (
-	dbName   = flag.String("db", "cards.cdb", "name of the database file")
-	jsonFile = flag.String("json", "result.json", "name of output file")
+	dbName   = flag.String("db", "cards.cdb", "database file")
+	jsonFile = flag.String("json", "wikia.json", "output file")
 )
 
 type WikiaResult map[string]struct {
@@ -51,59 +53,19 @@ var missedCards []string
 func main() {
 	flag.Parse()
 
-	// load
+	// download
 
-	db, err := sql.Open("sqlite3", *dbName)
-	catch(err)
-	defer db.Close()
-
-	rows, err := db.Query("select id, name from texts")
-	catch(err)
-
-	ids := make([]string, 0, 10000)
-	cardMap := make(map[string]string)
-
-	for rows.Next() {
-		var id, name string
-		err := rows.Scan(&id, &name)
-		catch(err)
-
-		id = fmt.Sprintf("%08s", id)
-		ids = append(ids, id)
-		cardMap[id] = name
-	}
-	catch(rows.Err())
-	defer rows.Close()
-
-	// download and parse
+	cards := getListOfPages()
 
 	const step = 50
-	var size = len(ids)
+	var size = len(cards)
 
 	for i := 0; i < size; i += step {
 		fmt.Println(i, "of", size)
 		if i+step > size {
-			parseJSON(ids[i:])
+			parseJSON(cards[i:])
 		} else {
-			parseJSON(ids[i : i+step])
-		}
-	}
-
-	// repeat for missed cards using card name
-
-	size = len(missedCards)
-	missed := make([]string, 0, size)
-
-	for _, c := range missedCards {
-		missed = append(missed, cardMap[c])
-	}
-
-	for i := 0; i < size; i += step {
-		fmt.Println("retrying", i, "of", size)
-		if i+step > size {
-			parseJSON(missed[i:])
-		} else {
-			parseJSON(missed[i : i+step])
+			parseJSON(cards[i : i+step])
 		}
 	}
 
@@ -146,11 +108,7 @@ func parseJSON(ids []string) {
 	catch(err)
 
 	for id, c := range cards {
-		if c.Revisions == nil {
-			missedCards = append(missedCards, c.Title)
-		} else {
-			resultJSON[id] = c
-		}
+		resultJSON[id] = c
 	}
 }
 

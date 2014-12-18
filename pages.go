@@ -17,6 +17,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/url"
 )
@@ -29,11 +30,12 @@ type PageResult struct {
 }
 
 func getListOfPages() []string {
-	var pages []string
+	pages := make(map[string]struct{})
 	var next string
-	for _, category := range categories {
+	for _, category := range config.Categories {
+		fmt.Println("loading", category)
 		for {
-			resp, err := http.PostForm(wikiaAPI,
+			resp, err := http.PostForm(config.Api,
 				url.Values{
 					"action":     {"query"},
 					"format":     {"json"},
@@ -50,7 +52,7 @@ func getListOfPages() []string {
 			resp.Body.Close()
 
 			for _, p := range page.Query.Categorymembers {
-				pages = append(pages, p.Title)
+				pages[p.Title] = struct{}{}
 			}
 
 			next = page.Continue.Categorymembers.Cmcontinue
@@ -59,5 +61,10 @@ func getListOfPages() []string {
 			}
 		}
 	}
-	return pages
+
+	cards := make([]string, 0, len(pages))
+	for p := range pages {
+		cards = append(cards, p)
+	}
+	return cards
 }

@@ -1,5 +1,6 @@
 {
 	"en": {
+		"api":"http://yugioh.wikia.com/api.php",
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-en.cdb",
 		"db": "cards-en.json",
@@ -8,6 +9,7 @@
 		"text": "|lore = "
 	},
 	"es": {
+		"api":"http://es.yugioh.wikia.com/api.php",
 		"categories":["Categoría:Carta"],
 		"cdb": "cards-es.cdb",
 		"db": "cards-es.json",

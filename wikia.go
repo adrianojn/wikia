@@ -18,25 +18,12 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"flag"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
-)
-
-const wikiaAPI = "http://yugioh.wikia.com/api.php"
-
-var categories = []string{
-	"Category:OCG cards",
-	"Category:TCG cards",
-}
-
-var (
-	dbName   = flag.String("db", "cards.cdb", "database file")
-	jsonFile = flag.String("json", "wikia.json", "output file")
 )
 
 type WikiaResult map[string]struct {
@@ -50,12 +37,10 @@ var resultJSON = make(WikiaResult)
 
 var missedCards []string
 
-func main() {
-	flag.Parse()
+func wikia() {
+	cards := getListOfPages()
 
 	// download
-
-	cards := getListOfPages()
 
 	const step = 50
 	var size = len(cards)
@@ -71,7 +56,7 @@ func main() {
 
 	// save
 
-	out, err := os.Create(*jsonFile)
+	out, err := os.Create(config.Db)
 	catch(err)
 	defer out.Close()
 
@@ -82,7 +67,7 @@ func main() {
 }
 
 func parseJSON(ids []string) {
-	resp, err := http.PostForm(wikiaAPI,
+	resp, err := http.PostForm(config.Api,
 		url.Values{
 			"action":    {"query"},
 			"format":    {"json"},
@@ -109,12 +94,5 @@ func parseJSON(ids []string) {
 
 	for id, c := range cards {
 		resultJSON[id] = c
-	}
-}
-
-func catch(err error) {
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
 	}
 }

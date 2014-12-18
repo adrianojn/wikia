@@ -16,5 +16,83 @@
 		"number": "|código=",
 		"pendulum": "",
 		"text": "|descripción="
+	},
+	"fr": {
+		"api":"http://fr.yugioh.wikia.com/api.php",
+		"categories":["Catégorie:Article de Carte"],
+		"cdb": "cards-fr.cdb",
+		"db": "cards-fr.json",
+		"number": "|numéro = ",
+		"pendulum": "",
+		"text": "|description = "
+	},
+	"de": {
+		"api":"http://de.yugioh.wikia.com/api.php",
+		"categories":[
+			"Kategorie:Normal Monster",
+			"Kategorie:Normales Monster"
+			"Kategorie:Effekt Monster",
+			"Kategorie:Fusions Monster",
+			"Kategorie:Ritual Monster",
+			"Kategorie:Synchromonster",
+			"Kategorie:Xyz Monster",
+			"Kategorie:Zauberkarte",
+			"Kategorie:Fallenkarte"
+		],
+		"cdb": "cards-de.cdb",
+		"db": "cards-de.json",
+		"number": "| Kartencode = ",
+		"pendulum": "",
+		"text": "| Beschreibung = "
+	},
+	"it": {
+		"api":"http://en.yugioh.wikia.com/api.php",
+		"categories":["Category:TCG cards","Category:OCG cards"],
+		"cdb": "cards-it.cdb",
+		"db": "cards-en.json",
+		"name":"|it_name = ",
+		"number": "|number = ",
+		"pendulum": "|it_pendulum_effect = ",
+		"text": "|it_lore = "
+	},
+	"pt": {
+		"api":"http://en.yugioh.wikia.com/api.php",
+		"categories":["Category:TCG cards","Category:OCG cards"],
+		"cdb": "cards-pt.cdb",
+		"db": "cards-en.json",
+		"name":"|pt_name = ",
+		"number": "|number = ",
+		"pendulum": "|pt_pendulum_effect = ",
+		"text": "|pt_lore = "
+	},
+	"ja": {
+		"api":"http://en.yugioh.wikia.com/api.php",
+		"categories":["Category:TCG cards","Category:OCG cards"],
+		"cdb": "cards-ja.cdb",
+		"db": "cards-en.json",
+		"name":"|ja_name = ",
+		"number": "|number = ",
+		"pendulum": "|ja_pendulum_effect = ",
+		"text": "|ja_lore = "
+	},
+	"zh": {
+		"api":"http://en.yugioh.wikia.com/api.php",
+		"categories":["Category:TCG cards","Category:OCG cards"],
+		"cdb": "cards-zh.cdb",
+		"db": "cards-en.json",
+		"name":"|zh_name = ",
+		"number": "|number = ",
+		"pendulum": "|zh_pendulum_effect = ",
+		"text": "|zh_lore = "
+	},
+	"ko": {
+		"api":"http://en.yugioh.wikia.com/api.php",
+		"categories":["Category:TCG cards","Category:OCG cards"],
+		"cdb": "cards-ko.cdb",
+		"db": "cards-en.json",
+		"name":"|ko_name = ",
+		"number": "|number = ",
+		"pendulum": "|ko_pendulum_effect = ",
+		"text": "|ko_lore = "
 	}
 }

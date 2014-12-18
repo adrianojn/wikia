@@ -59,7 +59,7 @@ func tranlate() {
 		id := strings.TrimLeft(extract(text, config.Number), "0")
 
 		var name string
-		if *mainWiki {
+		if *mainWiki || (config.Name != "") {
 			name = strip(extract(text, config.Name))
 		} else {
 			name = card.Title

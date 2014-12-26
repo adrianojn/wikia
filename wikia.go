@@ -16,13 +16,10 @@
 package main
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
 )
 
@@ -54,16 +51,7 @@ func wikia() {
 		}
 	}
 
-	// save
-
-	out, err := os.Create(config.Db)
-	catch(err)
-	defer out.Close()
-
-	data, err := json.MarshalIndent(&resultJSON, "", " ")
-	catch(err)
-
-	io.Copy(out, bytes.NewReader(data))
+	save(resultJSON, config.Db)
 }
 
 func parseJSON(ids []string) {

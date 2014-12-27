@@ -20,18 +20,20 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"regexp"
+	"strings"
 )
 
 func getRulings() {
-	pages := getListOfPages()[:10]
-
+	pages := getListOfPages()
 	result := make(map[string]string)
+	fmt.Println("downloading rulings for", len(pages), "cards")
 
 	for _, page := range pages {
 		id, text := getRuling(page)
 
-		if id != "" {
-			result[id] = text
+		if (id != "") && (text != "") {
+			result[id] = stripRulingText(text)
 		}
 	}
 
@@ -72,13 +74,26 @@ func getRuling(page string) (cardId, cardText string) {
 			return
 		}
 		if p.Ns == 102 {
-			// TODO: strip text
 			cardText = p.Revisions[0].Text
-
 		}
 		if p.Ns == 0 {
 			cardId = extract(p.Revisions[0].Text, "|number = ")
 		}
 	}
 	return
+}
+
+var removalList = []string{
+	`\{\{.*`, `\}\}`, `=+?`, `\* ?`, `'''`, `''`, `<ref.+?</ref>`, `<ref.*?/>`, `References`,
+}
+
+func stripRulingText(text string) string {
+	s := strings.TrimPrefix(text, "{{Navigation}}")
+	s = wikiRegex.ReplaceAllStringFunc(s, submatch)
+
+	for _, item := range removalList {
+		re := regexp.MustCompile(item)
+		s = re.ReplaceAllString(s, "")
+	}
+	return strings.TrimSpace(s)
 }

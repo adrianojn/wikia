@@ -27,9 +27,12 @@ import (
 func getRulings() {
 	pages := getListOfPages()
 	result := make(map[string]string)
-	fmt.Println("downloading rulings for", len(pages), "cards")
+	size := len(pages)
 
-	for _, page := range pages {
+	for i, page := range pages {
+		if i%100 == 0 {
+			fmt.Println(i, "of", size)
+		}
 		id, text := getRuling(page)
 
 		if (id != "") && (text != "") {

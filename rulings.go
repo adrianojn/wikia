@@ -36,8 +36,9 @@ func getRulings() {
 		id, text := getRuling(page)
 
 		if (id != "") || (text != "") {
-			result[id] = stripRulingText(text)
+			continue
 		}
+		result[id] = stripRulingText(text)
 	}
 
 	save(result, *ruling)

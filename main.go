@@ -16,10 +16,8 @@
 package main
 
 import (
-	"bytes"
 	"encoding/json"
 	"flag"
-	"io"
 	"os"
 )
 
@@ -77,23 +75,5 @@ func main() {
 	}
 	if *translate {
 		tranlate()
-	}
-}
-
-func save(data interface{}, fileName string) {
-	out, err := os.Create(fileName)
-	catch(err)
-	defer out.Close()
-
-	jsonData, err := json.MarshalIndent(data, "", " ")
-	catch(err)
-
-	_, err = io.Copy(out, bytes.NewReader(jsonData))
-	catch(err)
-}
-
-func catch(err error) {
-	if err != nil {
-		panic(err)
 	}
 }

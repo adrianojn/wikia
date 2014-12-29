@@ -20,7 +20,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"regexp"
 	"strings"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -121,9 +120,9 @@ func dbUpdate(id, name, lore string) {
 }
 
 var (
-	htmlRegex = regexp.MustCompile(`<.+?>`)
-	rubyRegex = regexp.MustCompile(`\{\{.+?\}\}`)
-	wikiRegex = regexp.MustCompile(`\[\[.+?\]\]`)
+	htmlRegex = regex(`<.+?>`)
+	rubyRegex = regex(`\{\{.+?\}\}`)
+	wikiRegex = regex(`\[\[.+?\]\]`)
 )
 
 func strip(src string) string {

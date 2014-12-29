@@ -35,10 +35,9 @@ func getRulings() {
 		}
 		id, text := getRuling(page)
 
-		if (id != "") || (text != "") {
-			continue
+		if (id != "") && (text != "") {
+			result[id] = stripRulingText(text)
 		}
-		result[id] = stripRulingText(text)
 	}
 
 	save(result, *ruling)
@@ -47,11 +46,12 @@ func getRulings() {
 func getRuling(page string) (cardId, cardText string) {
 	resp, err := http.PostForm("http://yugioh.wikia.com/api.php",
 		url.Values{
-			"action": {"query"},
-			"format": {"json"},
-			"prop":   {"revisions"},
-			"rvprop": {"content"},
-			"titles": {"Card Rulings:" + page + "|" + page},
+			"action":            {"query"},
+			"format":            {"json"},
+			"prop":              {"revisions"},
+			"rvprop":            {"content"},
+			"rvexpandtemplates": {"1"},
+			"titles":            {"Card Rulings:" + page + "|" + page},
 		})
 	if err != nil {
 		fmt.Println(page, err)
@@ -81,23 +81,46 @@ func getRuling(page string) (cardId, cardText string) {
 			cardText = p.Revisions[0].Text
 		}
 		if p.Ns == 0 {
-			cardId = extract(p.Revisions[0].Text, "|number = ")
+			cardId = extractNumber(p.Revisions[0].Text)
 		}
 	}
 	return
 }
 
-var removalList = []string{
-	`\{\{.*`, `\}\}`, `=+?`, `\* ?`, `'''`, `''`, `<ref.+?</ref>`, `<ref.*?/>`, `References`,
+var removalList = []*regexp.Regexp{
+	regex(`(?m)^\{.*`),
+	regex(`(?m)^<.*`),
+	regex(`(?m)^'.*`),
+	regex(`(?m)^\[.*`),
+	regex(`(?m)^\|.*`),
+	regex(`=+?`),
+	regex(`\* ?`),
+	regex(`'''`),
+	regex(`''`),
+	regex(`<ref>?.+?</ref>`),
+	regex(`<ref.*?/>`),
+	regex(`<sup.+?</sup>`),
+	regex(`<span.+?</nowiki>[^<].*?">`),
+	regex(`</span>`),
+	regex(`Notes`),
+	regex(`References`),
 }
 
 func stripRulingText(text string) string {
-	s := strings.TrimPrefix(text, "{{Navigation}}")
-	s = wikiRegex.ReplaceAllStringFunc(s, submatch)
-
-	for _, item := range removalList {
-		re := regexp.MustCompile(item)
+	s := text[strings.Index(text, "=="):]
+	for _, re := range removalList {
 		s = re.ReplaceAllString(s, "")
 	}
+	s = wikiRegex.ReplaceAllStringFunc(s, submatch)
 	return strings.TrimSpace(s)
+}
+
+var numberRegex = regex(`Card Number::(\d+)\|`)
+
+func extractNumber(source string) string {
+	s := numberRegex.FindStringSubmatch(source)
+	if len(s) > 1 {
+		return s[1]
+	}
+	return ""
 }

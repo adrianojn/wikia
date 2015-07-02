@@ -41,7 +41,7 @@ func tranlate() {
 	catch(err)
 	defer f.Close()
 
-	json.NewDecoder(f).Decode(&data)
+	err = json.NewDecoder(f).Decode(&data)
 	catch(err)
 
 	db, err = sql.Open("sqlite3", config.Cdb)

@@ -49,7 +49,8 @@ func getListOfPages() []string {
 			var page PageResult
 			err = json.NewDecoder(resp.Body).Decode(&page)
 			catch(err)
-			resp.Body.Close()
+			err = resp.Body.Close()
+			catch(err)
 
 			for _, p := range page.Query.Categorymembers {
 				pages[p.Title] = struct{}{}

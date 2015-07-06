@@ -49,6 +49,10 @@ func tranlate() {
 	defer db.Close()
 
 	// parse
+	fmt.Println(len(data), "cards")
+
+	tx, err := db.Begin()
+	catch(err)
 
 	for _, card := range data {
 		if card.Revisions == nil {
@@ -58,10 +62,10 @@ func tranlate() {
 		id := strings.TrimLeft(extract(text, config.Number), "0")
 
 		var name string
-		if *mainWiki || (config.Name != "") {
-			name = strip(extract(text, config.Name))
-		} else {
+		if config.Name == "" {
 			name = card.Title
+		} else {
+			name = strip(extract(text, config.Name))
 		}
 		lore := strip(extract(text, config.Text))
 
@@ -72,8 +76,9 @@ func tranlate() {
 			}
 		}
 
-		dbUpdate(id, name, lore)
+		dbUpdate(tx, id, name, lore)
 	}
+	catch(tx.Commit())
 }
 
 func extract(source, prefix string) string {
@@ -95,7 +100,7 @@ UPDATE texts SET name=? WHERE id IN
   (SELECT id FROM datas WHERE id=? OR
     (alias=? AND id > alias AND id - alias < 10));`
 
-func dbUpdate(id, name, lore string) {
+func dbUpdate(db *sql.Tx, id, name, lore string) {
 	if id == "" {
 		return
 	}

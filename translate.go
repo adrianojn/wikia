@@ -144,7 +144,13 @@ func submatch(s string) string {
 	return s[i+1 : len(s)-2]
 }
 
-func submatchRuby(s string) string {
+func submatchRuby(s string) (out string) {
+	defer func() {
+		if err := recover(); err != nil {
+			println("bad ruby submatch: ", s)
+			out = s
+		}
+	}()
 	a := strings.Index(s, "|")
 	b := strings.LastIndex(s, "|")
 	return s[a+1 : b]

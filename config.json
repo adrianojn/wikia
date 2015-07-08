@@ -4,95 +4,97 @@
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-en.cdb",
 		"db": "cards-en.json",
-		"number": "|number = ",
-		"pendulum":"|pendulum_effect = ",
-		"text": "|lore = "
+		"number":   "| number                = ",
+		"pendulum": "| pendulum_effect       = ",
+		"text":     "| lore                  = "
 	},
-	"es": {
+	"es2": {
 		"api":"http://es.yugioh.wikia.com/api.php",
 		"categories":["Categoría:Carta"],
-		"cdb": "cards-es.cdb",
+		"cdb": "cards-es2.cdb",
 		"db": "cards-es.json",
-		"number": "|código=",
+		"number":   "|código=",
 		"pendulum": "",
-		"text": "|descripción="
+		"text":     "|descripción="
+	},
+	"es": {
+		"api":"http://yugioh.wikia.com/api.php",
+		"categories":["Category:TCG cards","Category:OCG cards"],
+		"cdb": "cards-es.cdb",
+		"db": "cards-en.json",
+		"number":   "| number                = ",
+		"name":     "| es_name               = ",
+		"pendulum": "| es_pendulum_effect    = ",
+		"text":     "| es_lore               = "
 	},
 	"fr": {
-		"api":"http://fr.yugioh.wikia.com/api.php",
-		"categories":["Catégorie:Article de Carte"],
+		"api":"http://yugioh.wikia.com/api.php",
+		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-fr.cdb",
-		"db": "cards-fr.json",
-		"number": "|numéro = ",
-		"pendulum": "",
-		"text": "|description = "
+		"db": "cards-en.json",
+		"number":   "| number                = ",
+		"name":     "| fr_name               = ",
+		"pendulum": "| fr_pendulum_effect    = ",
+		"text":     "| fr_lore               = "
 	},
 	"de": {
-		"api":"http://de.yugioh.wikia.com/api.php",
-		"categories":[
-			"Kategorie:Normal Monster",
-			"Kategorie:Normales Monster",
-			"Kategorie:Effekt Monster",
-			"Kategorie:Fusions Monster",
-			"Kategorie:Ritual Monster",
-			"Kategorie:Synchromonster",
-			"Kategorie:Xyz Monster",
-			"Kategorie:Zauberkarte",
-			"Kategorie:Fallenkarte"
-		],
+		"api":"http://yugioh.wikia.com/api.php",
+		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-de.cdb",
-		"db": "cards-de.json",
-		"number": "| Kartencode = ",
-		"pendulum": "",
-		"text": "| Beschreibung = "
+		"db": "cards-en.json",
+		"number":   "| number                = ",
+		"name":     "| de_name               = ",
+		"pendulum": "| de_pendulum_effect    = ",
+		"text":     "| de_lore               = "
 	},
 	"it": {
 		"api":"http://en.yugioh.wikia.com/api.php",
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-it.cdb",
 		"db": "cards-en.json",
-		"name":"|it_name = ",
-		"number": "|number = ",
-		"pendulum": "|it_pendulum_effect = ",
-		"text": "|it_lore = "
+		"number":   "| number                = ",
+		"name":     "| it_name               = ",
+		"pendulum": "| it_pendulum_effect    = ",
+		"text":     "| it_lore               = "
 	},
 	"pt": {
 		"api":"http://en.yugioh.wikia.com/api.php",
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-pt.cdb",
 		"db": "cards-en.json",
-		"name":"|pt_name = ",
-		"number": "|number = ",
-		"pendulum": "|pt_pendulum_effect = ",
-		"text": "|pt_lore = "
+		"number":   "| number                = ",
+		"name":     "| pt_name               = ",
+		"pendulum": "| pt_pendulum_effect    = ",
+		"text":     "| pt_lore               = "
 	},
 	"ja": {
 		"api":"http://en.yugioh.wikia.com/api.php",
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-ja.cdb",
 		"db": "cards-en.json",
-		"name":"|ja_name = ",
-		"number": "|number = ",
-		"pendulum": "|ja_pendulum_effect = ",
-		"text": "|ja_lore = "
+		"number":   "| number                = ",
+		"name":     "| ja_name               = ",
+		"pendulum": "| ja_pendulum_effect    = ",
+		"text":     "| ja_lore               = "
 	},
 	"zh": {
 		"api":"http://en.yugioh.wikia.com/api.php",
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-zh.cdb",
 		"db": "cards-en.json",
-		"name":"|zh_name = ",
-		"number": "|number = ",
-		"pendulum": "|zh_pendulum_effect = ",
-		"text": "|zh_lore = "
+		"number":   "| number                = ",
+		"name":     "| zh_name               = ",
+		"pendulum": "| zh_pendulum_effect    = ",
+		"text":     "| zh_lore               = "
 	},
 	"ko": {
 		"api":"http://en.yugioh.wikia.com/api.php",
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-ko.cdb",
 		"db": "cards-en.json",
-		"name":"|ko_name = ",
-		"number": "|number = ",
-		"pendulum": "|ko_pendulum_effect = ",
-		"text": "|ko_lore = "
+		"number":   "| number                = ",
+		"name":     "| ko_name               = ",
+		"pendulum": "| ko_pendulum_effect    = ",
+		"text":     "| ko_lore               = "
 	}
 }

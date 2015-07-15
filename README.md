@@ -13,10 +13,6 @@ Modes:
 	-update     update the wikia database
 	-translate  translate Ygopro database
 
-Translation modes:
-
-	-main       translate using English wikia database
-
 Known languages:
 
 	en English

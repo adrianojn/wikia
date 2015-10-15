@@ -33,9 +33,9 @@ func getRulings() {
 		if i%100 == 0 {
 			fmt.Println(i, "of", size)
 		}
-		id, text := getRuling(page)
+		id, text, err := getRuling(page)
 
-		if (id != "") && (text != "") {
+		if err == nil {
 			result[id] = stripRulingText(text)
 		}
 	}
@@ -43,7 +43,7 @@ func getRulings() {
 	save(result, *ruling)
 }
 
-func getRuling(page string) (cardId, cardText string) {
+func getRuling(page string) (cardId, cardText string, err error) {
 	resp, err := http.PostForm("http://yugioh.wikia.com/api.php",
 		url.Values{
 			"action":            {"query"},
@@ -55,7 +55,7 @@ func getRuling(page string) (cardId, cardText string) {
 		})
 	if err != nil {
 		fmt.Println(page, err)
-		return
+		return "", "", err
 	}
 	var data struct {
 		Query struct {
@@ -70,12 +70,12 @@ func getRuling(page string) (cardId, cardText string) {
 	err = json.NewDecoder(resp.Body).Decode(&data)
 	if err != nil {
 		fmt.Println(page, err)
-		return
+		return "", "", err
 	}
 
 	for _, p := range data.Query.Pages {
 		if p.Revisions == nil {
-			return
+			return "", "", err
 		}
 		if p.Ns == 102 {
 			cardText = p.Revisions[0].Text
@@ -84,7 +84,7 @@ func getRuling(page string) (cardId, cardText string) {
 			cardId = extractNumber(p.Revisions[0].Text)
 		}
 	}
-	return
+	return cardText, cardId, nil
 }
 
 var removalList = []*regexp.Regexp{

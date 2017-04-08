@@ -4,7 +4,7 @@
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-en.cdb",
 		"db": "cards.json",
-		"number":   "| number                = ",
+		"number":   "| passcode              = ",
 		"pendulum": "| pendulum_effect       = ",
 		"text":     "| lore                  = "
 	},
@@ -22,7 +22,7 @@
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-es.cdb",
 		"db": "cards.json",
-		"number":   "| number                = ",
+		"number":   "| passcode              = ",
 		"name":     "| es_name               = ",
 		"pendulum": "| es_pendulum_effect    = ",
 		"text":     "| es_lore               = "
@@ -32,7 +32,7 @@
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-fr.cdb",
 		"db": "cards.json",
-		"number":   "| number                = ",
+		"number":   "| passcode              = ",
 		"name":     "| fr_name               = ",
 		"pendulum": "| fr_pendulum_effect    = ",
 		"text":     "| fr_lore               = "
@@ -42,7 +42,7 @@
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-de.cdb",
 		"db": "cards.json",
-		"number":   "| number                = ",
+		"number":   "| passcode              = ",
 		"name":     "| de_name               = ",
 		"pendulum": "| de_pendulum_effect    = ",
 		"text":     "| de_lore               = "
@@ -52,7 +52,7 @@
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-it.cdb",
 		"db": "cards.json",
-		"number":   "| number                = ",
+		"number":   "| passcode              = ",
 		"name":     "| it_name               = ",
 		"pendulum": "| it_pendulum_effect    = ",
 		"text":     "| it_lore               = "
@@ -62,7 +62,7 @@
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-pt.cdb",
 		"db": "cards.json",
-		"number":   "| number                = ",
+		"number":   "| passcode              = ",
 		"name":     "| pt_name               = ",
 		"pendulum": "| pt_pendulum_effect    = ",
 		"text":     "| pt_lore               = "
@@ -72,7 +72,7 @@
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-ja.cdb",
 		"db": "cards.json",
-		"number":   "| number                = ",
+		"number":   "| passcode              = ",
 		"name":     "| ja_name               = ",
 		"pendulum": "| ja_pendulum_effect    = ",
 		"text":     "| ja_lore               = "
@@ -82,7 +82,7 @@
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-zh.cdb",
 		"db": "cards.json",
-		"number":   "| number                = ",
+		"number":   "| passcode              = ",
 		"name":     "| zh_name               = ",
 		"pendulum": "| zh_pendulum_effect    = ",
 		"text":     "| zh_lore               = "
@@ -92,7 +92,7 @@
 		"categories":["Category:TCG cards","Category:OCG cards"],
 		"cdb": "cards-ko.cdb",
 		"db": "cards.json",
-		"number":   "| number                = ",
+		"number":   "| passcode              = ",
 		"name":     "| ko_name               = ",
 		"pendulum": "| ko_pendulum_effect    = ",
 		"text":     "| ko_lore               = "
